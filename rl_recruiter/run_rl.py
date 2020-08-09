@@ -16,6 +16,16 @@ class RL_Recruiter_plus:
         for i in range(len(self.thres) + 1):
             self.thres_util.append({'sum': 1, 'count': 1})
     
+    def save_weights(self, dir_path):
+        np.save(dir_path + 'q_table.npy', self.q_table)
+        with open(dir_path + 'entro_scores.json', 'w', encoding='utf-8') as f:
+            json.dump(self.thres_util, f)
+    
+    def load_weights(self, dir_path):
+        self.q_table = np.load(dir_path)
+        with open(dir_path + 'entro_scores.json', 'r', encoding='utf-8') as f:
+            self.thres_util = json.load(f)
+    
     def train_and_evaluate(self, track_data_file, entro_file, rseed=1):
         random.seed(rseed)
         # load parameter settings
@@ -101,5 +111,6 @@ class RL_Recruiter_plus:
                         if epoch == 0:
                             predict_result.append(cov)
                         break
+        print("each day's coervage")
         print(predict_result)
         return np.array(predict_result)
