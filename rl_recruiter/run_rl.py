@@ -3,6 +3,7 @@ import json
 import copy
 import numpy as np
 import random
+import tqdm
 
 class RL_Recruiter_plus:
     def __init__(self, hypara_file, thres_file):
@@ -22,7 +23,7 @@ class RL_Recruiter_plus:
             json.dump(self.thres_util, f)
     
     def load_weights(self, dir_path):
-        self.q_table = np.load(dir_path)
+        self.q_table = np.load(dir_path + 'q_table.npy')
         with open(dir_path + 'entro_scores.json', 'r', encoding='utf-8') as f:
             self.thres_util = json.load(f)
     
@@ -90,9 +91,8 @@ class RL_Recruiter_plus:
             entro = json.load(end)
         
         predict_result = []
-
-        for day in range(train_start_day, train_end_day):
-            print('day: '+ str(day))
+        print('train and evaluate from day to day')
+        for day in tqdm.tqdm(range(train_start_day, train_end_day)):
             for epoch in range(train_epoch):
                 cur_eps = epsilon
                 if epoch == 0:
