@@ -1,0 +1,12 @@
+{
+    "epsilon": 0.8,
+    "alpha": 0.8,
+    "gamma": 0.43,
+    "total_person": 182,
+    "max_user": 20,
+    "train_start": 0,
+    "train_end": 14,
+    "train_epoch": 1000,
+    "layer": 20,
+    "beta": 0.5
+}
