@@ -26,6 +26,38 @@ class RL_Recruiter_plus:
         with open(dir_path + 'entro_scores.json', 'r', encoding='utf-8') as f:
             self.thres_util = json.load(f)
     
+    def predict(self, entro_list):
+        total_person = self.hypara_dict['total_person']
+        layer = self.hypara_dict['layer']
+        epsilon = self.hypara_dict['epsilon']
+        max_user = self.hypara_dict['max_user']
+        gamma = self.hypara_dict['gamma']
+        alpha = self.hypara_dict['alpha']
+        beta = self.hypara_dict['beta']
+        thres = self.thres
+        thres_util = self.thres_util
+        avg_score = self.q_table
+
+        bin_amount = total_person / layer
+        selected = 0
+        choice_list = [i for i in range(total_person)]
+        result = []
+        while True:
+            lay_idx = layer_index(selected, bin_amount, layer)
+            cur_score_list = avg_score[lay_idx].copy()
+            for i in range(total_person):
+                if entro_list[i] != -1:
+                    cur_idx = thres_index(thres, entro_list[i])
+                    cur_score_list[i] += beta * (thres_util[cur_idx]['sum'] / thres_util[cur_idx]['count'])
+            user_id, _ = get_index_largest(cur_score_list, choice_list)
+            result.append(user_id)
+            selected += 1
+
+            if selected >= max_user:
+                break
+        return result
+
+    
     def train_and_evaluate(self, track_data_file, entro_file, rseed=1):
         random.seed(rseed)
         # load parameter settings
@@ -76,8 +108,10 @@ class RL_Recruiter_plus:
                     if random.random() > cur_eps:
                         cur_score_list = avg_score[lay_idx].copy()
                         for i in range(total_person):
-                            if len(entro[str(i)]) > 0:
-                                cur_idx = thres_index(thres, entro[str(i)][day])
+                            if len(entro[str(i)]) > 0 and day != train_start_day:
+                                # in first epoch, we do the predict first, as we do not know entropy data 
+                                # in current slot, we use the data in last day
+                                cur_idx = thres_index(thres, entro[str(i)][day - 1])
                                 cur_score_list[i] += beta * (thres_util[cur_idx]['sum'] / thres_util[cur_idx]['count'])
                         user_id, _ = get_index_largest(cur_score_list, choice_list)
                     else:
