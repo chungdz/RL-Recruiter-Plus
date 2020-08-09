@@ -4,6 +4,7 @@ import copy
 import numpy as np
 import random
 import tqdm
+import sys
 
 class RL_Recruiter_plus:
     def __init__(self, hypara_file, thres_file):
@@ -53,7 +54,7 @@ class RL_Recruiter_plus:
             user_id, _ = get_index_largest(cur_score_list, choice_list)
             result.append(user_id)
             selected += 1
-
+            choice_list.remove(user_id)
             if selected >= max_user:
                 break
         return result
@@ -92,6 +93,7 @@ class RL_Recruiter_plus:
         
         predict_result = []
         print('train and evaluate from day to day')
+        sys.stdout.flush()
         for day in tqdm.tqdm(range(train_start_day, train_end_day)):
             for epoch in range(train_epoch):
                 cur_eps = epsilon
