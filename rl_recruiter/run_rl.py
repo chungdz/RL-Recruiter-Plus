@@ -149,4 +149,3 @@ class RL_Recruiter_plus:
                         break
         print("Each day's coverage:")
         print(predict_result)
-        return np.array(predict_result)
