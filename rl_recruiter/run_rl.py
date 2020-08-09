@@ -147,6 +147,6 @@ class RL_Recruiter_plus:
                         if epoch == 0:
                             predict_result.append(cov)
                         break
-        print("each day's coervage")
+        print("Each day's coverage:")
         print(predict_result)
         return np.array(predict_result)
