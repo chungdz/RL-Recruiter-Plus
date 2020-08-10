@@ -51,3 +51,11 @@ def add_new_location(coverage, user_trace):
             reward += 1
             coverage.append(point)
     return reward, coverage
+
+def coverage_summary(choice_list, track_data, day):
+    coverage = []
+    for user in choice_list:
+        if len(track_data[str(user)]) <= 0:
+            continue
+        _, coverage = add_new_location(coverage, track_data[str(user)][day])
+    return coverage

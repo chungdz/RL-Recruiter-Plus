@@ -42,7 +42,7 @@ The other is the participants' predictability data that can be calculated from t
     type_2_entro('./data/trajectory.json', './data/predictability.json')
 
 #### Output
-RL-Recruiter+ shows the training results for each time period by select participants and calculate their coverage and reletive coverage at the beginning of the next time period.(e.g. using the trained value function after the j-1 time period to select participants in the beginning of the j time period to show performance) In the first time period the RL-Recruiter+ randomly selects participants.
+RL-Recruiter+ shows the training results for each time period by select participants and calculate their absolute coverage and reletive coverage at the beginning of the next time period(e.g. using the trained value function after the j-1 time period to select participants in the beginning of the j time period to show performance). Absolute coverage is the exact number of area covered. Relative coverage is the absolute coverage divided by the highest possible coverage, which is obtained by selecting all participants. In the first time period the RL-Recruiter+ randomly selects participants.
 
 ### Predict Process
 

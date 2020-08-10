@@ -1,4 +1,4 @@
-from rl_recruiter.util import get_user_list, get_index_largest, add_new_location, layer_index, thres_index
+from rl_recruiter.util import get_user_list, get_index_largest, add_new_location, layer_index, thres_index, coverage_summary
 import json
 import copy
 import numpy as np
@@ -95,9 +95,12 @@ class RL_Recruiter_plus:
             entro = json.load(end)
         
         predict_result = []
+        relative_coverage = []
         print('train and evaluate from day to day')
         sys.stdout.flush()
         for day in tqdm.tqdm(range(train_start_day, train_end_day)):
+            highest_coverage = coverage_summary(ulist, trackdata, day)
+
             for epoch in range(train_epoch):
                 cur_eps = epsilon
                 if epoch == 0:
@@ -149,6 +152,9 @@ class RL_Recruiter_plus:
                         cov = len(curcoverage)
                         if epoch == 0:
                             predict_result.append(cov)
+                            relative_coverage.append(cov / len(highest_coverage))
                         break
         print("Each day's coverage:")
         print(predict_result)
+        print("relative coverage:")
+        print(relative_coverage)
