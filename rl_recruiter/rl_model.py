@@ -28,7 +28,8 @@ class RL_Recruiter_plus:
         with open(dir_path + 'entro_scores.json', 'r', encoding='utf-8') as f:
             self.thres_util = json.load(f)
     
-    def predict(self, entro_list):
+    def predict(self, entro_list=None):
+
         total_person = self.hypara_dict['total_person']
         layer = self.hypara_dict['layer']
         epsilon = self.hypara_dict['epsilon']
@@ -44,6 +45,8 @@ class RL_Recruiter_plus:
         selected = 0
         choice_list = [i for i in range(total_person)]
         result = []
+        if entro_list is None:
+            entro_list = np.zeros((total_person))
         while True:
             lay_idx = layer_index(selected, bin_amount, layer)
             cur_score_list = avg_score[lay_idx].copy()
