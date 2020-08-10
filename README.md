@@ -17,7 +17,7 @@ You can see a quick example on how to use the RL-Recruiter+ in this [page]().
 ## Model Input and Output
 
 ### Model Settings
-The model settings saved in a json file that needs to initialize the model. A example is in this [page]().
+The model settings saved in a json file that needs to initialize the model. A example is in this [page](https://github.com/chungdz/RL_Recruiter-Plus/blob/master/example/data/para_settings.json).
 
 There are several parameters need to be deployed:
 * "total_person": the number of whole participants.
@@ -31,4 +31,9 @@ There are several parameters need to be deployed:
 
 There are two data files need to be input. 
 
-The first is the trajectory data, you can see example [here](https://github.com/chungdz/RL_Recruiter-Plus/blob/master/example/data/trajectory.json). The trajectory data is a dictionary saved in json format. The key is a participant id and the value is a list of trajectory sets in each time period. The participant ids need to be mapped into consecutive integer. If there are 100 participants, then the key list in trajectory dictionary are like ["0", "1", ..., "99"]. One trajectory set contain nonredundant categorical integers representing the area covered by its participant in this time period.
+The first is the trajectory data, you can see example [here](https://github.com/chungdz/RL_Recruiter-Plus/blob/master/example/data/trajectory.json). The trajectory data is a dictionary saved in json format. The key is a participant id and the value is a list of trajectory sets in each time period. The participant ids need to be mapped into consecutive integer. If there are 100 participants, then the key list in trajectory dictionary are like ["0", "1", ..., "99"]. One trajectory set contains nonredundant categorical integers representing the area covered by its participant in this time period.
+
+The other is the participants' predictability data that can be calculated from trajectory data.
+
+    from rl_recruiter.entropy_cal import type_2_entro
+    type_2_entro('./data/trajectory.json', 'predictability.json')

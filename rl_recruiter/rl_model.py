@@ -139,7 +139,7 @@ class RL_Recruiter_plus:
 
                     if epoch > 0:
                         user_idx = thres_index(thres, entro[str(user_id)][day])
-                        thres_util[user_idx]['sum'] += final_reward
+                        thres_util[user_idx]['sum'] += reward
                         thres_util[user_idx]['count'] += 1
                     
                     avg_score[lay_idx][user_id] = avg_score[lay_idx][user_id] + alpha * (final_reward - avg_score[lay_idx][user_id])
