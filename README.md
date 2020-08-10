@@ -1,4 +1,4 @@
-# RL_Recruiter+
+# RL-Recruiter+
 
 A participant selection algorithm using reinforcement learning. Details are in the paper "RL-Recruiter+: Mobility-Predictability-Aware Participant Selection Learning for From-Scratch Mobile Crowdsensing".
 
@@ -8,16 +8,16 @@ Participant selection is a fundamental research issue in Mobile Crowdsensing (MC
 
 ## Objective of RL-Recruiter+
 
-Given the historical trajectories of a set of participants, the RL_Recruiter+ can do the learning process based on them, and then selected a fixed number of participants. RL_Recruiter+ tries to maximize the area covered by the selected participants.
+Given the historical trajectories of a set of participants, the RL-Recruiter+ can do the learning process based on them, and then selected a fixed number of participants. RL-Recruiter+ tries to maximize the area covered by the selected participants.
 
 ## Running Example
 
-You can see a quick example on how to use the RL-Recruiter+ in this [page](https://github.com/chungdz/RL_Recruiter-Plus/blob/master/example/run_example.ipynb).
+You can see a quick example on how to use the RL-Recruiter+ in this [page](https://github.com/chungdz/RL-Recruiter-Plus/blob/master/example/run_example.ipynb).
 
 ## Input and Output of RL-Recruiter+
 
 ### Parameter Settings
-The model settings saved in a json file that needs to initialize the model. A example is in this [page](https://github.com/chungdz/RL_Recruiter-Plus/blob/master/example/data/para_settings.json).
+The model settings saved in a json file that needs to initialize the model. A example is in this [page](https://github.com/chungdz/RL-Recruiter-Plus/blob/master/example/data/para_settings.json).
 
 There are several parameters need to be deployed:
 * "total_person": the number of whole participants.
@@ -27,13 +27,13 @@ There are several parameters need to be deployed:
 * "train_epoch": the number of training epoch.
 * "layer": the number of rows in value function table, cannot be higher than "max_user", the higher the layer, the larger the table, and thus it needs more data and epoch to learn and may get a better result.
 
-There is another file needs to be imported to the model, which contains the threshold values for discretizing the entropy values which is one input to do the training and predicting. It is in the json list format. Just using our [thresholds](https://github.com/chungdz/RL_Recruiter-Plus/blob/master/example/data/thres.json) is fine. There are 100 threshold in the list. Making another file with the same format is also feasible. 
+There is another file needs to be imported to the model, which contains the threshold values for discretizing the entropy values which is one input to do the training and predicting. It is in the json list format. Just using our [thresholds](https://github.com/chungdz/RL-Recruiter-Plus/blob/master/example/data/thres.json) is fine. There are 100 threshold in the list. Making another file with the same format is also feasible. 
 
 ### Training Process
 
 There are two data files need to be input. 
 
-The first is the trajectory data, you can see example [here](https://github.com/chungdz/RL_Recruiter-Plus/blob/master/example/data/trajectory.json). The trajectory data is a dictionary saved in json format. The key is a participant id and the value is a list of trajectory sets in each time period. The participant ids need to be mapped into consecutive integer. If there are 100 participants, then the key list in trajectory dictionary are like ["0", "1", ..., "99"]. One trajectory set contains nonredundant categorical integers representing the area covered by its participant in this time period. The integer "-1" in trajectory sets will be ignored and not counted in coverage.
+The first is the trajectory data, you can see example [here](https://github.com/chungdz/RL-Recruiter-Plus/blob/master/example/data/trajectory.json). The trajectory data is a dictionary saved in json format. The key is a participant id and the value is a list of trajectory sets in each time period. The participant ids need to be mapped into consecutive integer. If there are 100 participants, then the key list in trajectory dictionary are like ["0", "1", ..., "99"]. One trajectory set contains nonredundant categorical integers representing the area covered by its participant in this time period. The integer "-1" in trajectory sets will be ignored and not counted in coverage.
 
 The other is the participants' predictability data that can be calculated from trajectory data. The format of the predictability data is also a dictionary with keys the participant ids and values the list of entroy values in each time period.
 
@@ -45,6 +45,9 @@ The other is the participants' predictability data that can be calculated from t
 There is an optional input to do the prediction. This input is a list of entropy values with the length equal to number of total participants. Value in dimension k represents the entropy value for participant with id "k". 
 
 One can construct this list using the predictability data obtained before.
+
+    import json
+    import numpy as np
 
     with open('./data/predictability.json', 'r') as f:
     entro_dict = json.load(f)
