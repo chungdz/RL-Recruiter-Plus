@@ -17,7 +17,7 @@ You can see a quick example on how to use the RL-Recruiter+ in this [page](https
 ## Input and Output of RL-Recruiter+
 
 ### Parameter Settings
-The model settings saved in a json file that needs to initialize the model. A example is in this [page](https://github.com/chungdz/RL-Recruiter-Plus/blob/master/example/data/para_settings.json).
+The first settings saved in a json file that needs to initialize the model. A example is in this [page](https://github.com/chungdz/RL-Recruiter-Plus/blob/master/example/data/para_settings.json).
 
 There are several parameters need to be deployed:
 * "total_person": the number of whole participants.
