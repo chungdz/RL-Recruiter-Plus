@@ -31,6 +31,7 @@ There is another file needs to be imported to the model, which contains the thre
 
 ### Training Process
 
+#### Input
 There are two data files need to be input. 
 
 The first is the trajectory data, you can see example [here](https://github.com/chungdz/RL-Recruiter-Plus/blob/master/example/data/trajectory.json). The trajectory data is a dictionary saved in json format. The key is a participant id and the value is a list of trajectory sets in each time period. The participant ids need to be mapped into consecutive integer. If there are 100 participants, then the key list in trajectory dictionary are like ["0", "1", ..., "99"]. One trajectory set contains nonredundant categorical integers representing the area covered by its participant in this time period. The integer "-1" in trajectory sets will be ignored and not counted in coverage.
@@ -39,6 +40,9 @@ The other is the participants' predictability data that can be calculated from t
 
     from rl_recruiter.entropy_cal import type_2_entro
     type_2_entro('./data/trajectory.json', './data/predictability.json')
+
+#### Output
+RL-Recruiter+ shows the training results for each time period by select participants and calculate their coverage and reletive coverage at the beginning of the next time period.(e.g. using the trained value function after the j-1 time period to select participants in the beginning of the j time period to show performance) In the first time period the RL-Recruiter+ randomly selects participants.
 
 ### Predict Process
 
@@ -60,3 +64,5 @@ One can construct this list using the predictability data obtained before.
             pass
 
  If this input is given, then RL-Recruiter+ will selected participants using both the predictability information and the trained value function. It is recommanded for a better performance. 
+
+ The RL_Recruiter+ gives a list of promoting participants after the predict process.
